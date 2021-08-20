@@ -2,17 +2,17 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
-    <PackageId>NetOctree</PackageId>
-    <Description>A dynamic, loose octree implementation written in C#</Description>
-    <Company>Ericsson</Company>
-    <Authors>Máté Cserép</Authors>
-    <Copyright>Copyright © Máté Cserép 2017-2020</Copyright>
-    <PackageProjectUrl>https://github.com/mcserep/NetOctree</PackageProjectUrl>
+    <PackageId>MB.NetOctree</PackageId>
+    <Description>A dynamic, loose octree implementation written in C#. This branch contains additional features. </Description>
+    <Authors>Máté Cserép, Marius Mitea</Authors>
+    <Copyright>Copyright © Máté Cserép, Marius Mitea 2017-2020</Copyright>
+    <PackageProjectUrl>https://github.com/myblindy/NetOctree</PackageProjectUrl>
     <PackageLicenseExpression>BSD-2-Clause</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.2</Version>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">

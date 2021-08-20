@@ -7,6 +7,7 @@
 // </copyright>
 namespace Octree
 {
+    using System;
     using System.Collections.Generic;
     using NLog;
 
@@ -64,19 +65,21 @@ namespace Octree
         /// </summary>
         private readonly float _minSize;
 
-	    /// <summary>
-	    /// The total amount of objects currently in the tree
-	    /// </summary>
-	    public int Count { get; private set; }
+        /// <summary>
+        /// The total amount of objects currently in the tree
+        /// </summary>
+        public int Count { get; private set; }
 
-		/// <summary>
-		/// Gets the bounding box that represents the whole octree
-		/// </summary>
-		/// <value>The bounding box of the root node.</value>
-		public BoundingBox MaxBounds
+        /// <summary>
+        /// Gets the bounding box that represents the whole octree
+        /// </summary>
+        /// <value>The bounding box of the root node.</value>
+        public BoundingBox MaxBounds
         {
             get { return _rootNode.Bounds; }
         }
+
+        private readonly Action clearInternal;
 
         /// <summary>
         /// Constructor for the bounds octree.
@@ -94,14 +97,22 @@ namespace Octree
                     + " Adjusted to: " + initialWorldSize);
                 minNodeSize = initialWorldSize;
             }
-            Count = 0;
             _initialSize = initialWorldSize;
             _minSize = minNodeSize;
             _looseness = MathExtensions.Clamp(loosenessVal, 1.0f, 2.0f);
-            _rootNode = new Node(_initialSize, _minSize, _looseness, initialWorldPos);
+            (clearInternal = () =>
+            {
+                _rootNode = new Node(_initialSize, _minSize, _looseness, initialWorldPos);
+                Count = 0;
+            })();
         }
 
         // #### PUBLIC METHODS ####
+
+        /// <summary>
+        /// Clears all objects and resets the tree state to the initial state.
+        /// </summary>
+        public void Clear() => clearInternal();
 
         /// <summary>
         /// Add an object.
